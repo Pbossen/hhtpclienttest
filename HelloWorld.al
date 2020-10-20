@@ -48,6 +48,7 @@ pageextension 60100 ItemCardExt extends "Item Card"
                     JsonObject: JsonObject;
                     JsonToken: JsonToken;
                     Jsonarray: JsonArray;
+                    
                 Begin
                     UrlText := 'http://www.floatrates.com/daily/dkk.json';
                     IF Httpclient.Get(UrlText, HttpResponse) then begin
