@@ -49,12 +49,23 @@ pageextension 60100 ItemCardExt extends "Item Card"
                     Instream: InStream;
                     UrlText: Text;
                     JSonText: Text;
+                    JsonObject: JsonObject;
+                    JsonToken: JsonToken;
+                    Jsonarray: JsonArray;
                 Begin
                     UrlText := 'http://www.floatrates.com/daily/dkk.json';
                     IF Httpclient.Get(UrlText, HttpResponse) then begin
                         if HttpResponse.HttpStatusCode = 200 then begin
                             HttpResponse.Content.ReadAs(JSonText);
-                            Error('%1', JSonText);
+                            JSonText := '[' + JSonText + ']';
+                            Jsonarray.ReadFrom(JSonText);
+                            foreach jsontoken in Jsonarray do begin
+                                JsonObject := JsonToken.AsObject();
+                                Error('%1', JsonObject);
+                            end;
+
+
+                            //Error('%1',JsonToken);
 
                         end else
                             Error('Øv');
