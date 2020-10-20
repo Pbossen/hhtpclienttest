@@ -36,6 +36,33 @@ pageextension 60100 ItemCardExt extends "Item Card"
 
                 end;
             }
+            action("Get floatrate Curr Rates")
+            {
+                ApplicationArea = all;
+                image = ImportCodes;
+
+                trigger OnAction()
+                var
+                    Httpclient: HttpClient;
+                    HttpResponse: HttpResponseMessage;
+                    HttpContent: HttpContent;
+                    Instream: InStream;
+                    UrlText: Text;
+                    JSonText: Text;
+                Begin
+                    UrlText := 'http://www.floatrates.com/daily/dkk.json';
+                    IF Httpclient.Get(UrlText, HttpResponse) then begin
+                        if HttpResponse.HttpStatusCode = 200 then begin
+                            HttpResponse.Content.ReadAs(JSonText);
+                            Error('%1', JSonText);
+
+                        end else
+                            Error('Øv');
+                    end;
+
+
+                end;
+            }
         }
     }
 }
